@@ -37,10 +37,15 @@ export default async function Home({
       <div className="mx-auto w-full max-w-[2560px] px-4 sm:px-8 xxl:px-16 h-full">
         <nav className="py-6 flex items-center justify-between">
           <p className="text-purple-100 text-sm font-bold">LOGO</p>
-          <Search />
+          <div className="hidden md:block">
+            <Search />
+          </div>
           <LogoutButton />
         </nav>
 
+        <div className="block md:hidden">
+          <Search />
+        </div>
         <div className="mt-6 flex items-center gap-3">
           <Category />
         </div>
@@ -50,10 +55,16 @@ export default async function Home({
             <h1 className="text-2xl font-semibold text-white">
               Your collections
             </h1>
+
             <CreateAssetDialog tags={tags} />
           </div>
 
-          <div className="py-8 grid grid-cols-6 gap-x-4 gap-y-8">
+          <div
+            className="py-8 grid gap-x-4 gap-y-8"
+            style={{
+              gridTemplateColumns: 'repeat(auto-fill, minmax(267px,1fr))',
+            }}
+          >
             {assets.map(asset => (
               <div
                 key={asset.id}

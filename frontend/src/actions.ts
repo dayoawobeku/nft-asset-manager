@@ -4,16 +4,20 @@ import {revalidatePath} from 'next/cache';
 import {redirect} from 'next/navigation';
 import {Session} from '@supabase/supabase-js';
 import {createClient} from '@/utils/supabase/server';
-import {trpcClient} from './utils/trpc';
+import {trpcClient} from '@/utils/trpc';
 import {TRPCClientError} from '@trpc/client';
 
 export async function login(): Promise<{error?: string; session?: Session}> {
   const supabase = await createClient();
 
-  // for dummy user
+  // for dummy user login
+  // i created this user on supabase specifically to populate with predefined data
+  // and avoid signing up with email x password (since we don't have that)
+  // so anyone can test without using their own credentials
+  // update this in your .env.local file if you intend to do the same
   const credentials = {
-    email: 'dawobeku@gmail.com',
-    password: 'password',
+    email: process.env.DUMMY_USER_EMAIL!,
+    password: process.env.DUMMY_USER_PASSWORD!,
   };
 
   const {data, error} = await supabase.auth.signInWithPassword(credentials);

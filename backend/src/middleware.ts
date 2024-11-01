@@ -1,4 +1,4 @@
-import {t, TRPCError} from './trpc';
+import {t, TRPCError} from './utils/trpc';
 
 export const auth = t.middleware(async ({ctx, next}) => {
   if (!ctx.user) {

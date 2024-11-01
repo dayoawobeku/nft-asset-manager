@@ -1,6 +1,6 @@
 import {SupabaseClient} from '@supabase/supabase-js';
 import {z} from 'zod';
-import {t, TRPCError} from '../trpc';
+import {t, TRPCError} from '../utils/trpc';
 import type {Database} from '../../../shared/types/supabase';
 import {supabase} from '../utils/db';
 

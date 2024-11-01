@@ -1,20 +1,25 @@
-import {t, TRPCError} from '../trpc';
+import {t, TRPCError} from '../utils/trpc';
 import {supabase} from '../utils/db';
 
 export const tagRouter = t.router({
   getTags: t.procedure.query(async () => {
-    const {data: tags, error} = await supabase
-      .from('tags')
-      .select('*')
-      .order('name');
+    try {
+      const {data, error} = await supabase.rpc('get_tags');
 
-    if (error) {
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        });
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error in getTags:', error);
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
-        message: error.message,
+        message: 'An unexpected error occurred while fetching tags',
       });
     }
-
-    return tags;
   }),
 });

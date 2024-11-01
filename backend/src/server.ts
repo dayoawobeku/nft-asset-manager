@@ -5,11 +5,14 @@ import fastify from 'fastify';
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import {fastifyTRPCPlugin} from '@trpc/server/adapters/fastify';
-import {createContext} from './context';
+import {createContext} from './utils/context';
 import {assetRouter} from './routes/assets';
 import {uploadRouter} from './routes/upload';
 import {tagRouter} from './routes/tags';
-import {t} from './trpc';
+import {t} from './utils/trpc';
+
+const PORT = Number(process.env.PORT);
+const ORIGIN = process.env.ORIGIN!;
 
 const server = fastify({
   maxParamLength: 5000,
@@ -19,7 +22,7 @@ const server = fastify({
 
 server.register(fastifyCookie);
 server.register(cors, {
-  origin: ['http://localhost:3000'],
+  origin: [ORIGIN],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -38,7 +41,7 @@ server.register(fastifyTRPCPlugin, {
 
 async function start() {
   try {
-    await server.listen({port: 3001}, (err, address) => {
+    await server.listen({port: PORT}, (err, address) => {
       if (err) {
         console.error(err);
         process.exit(1);

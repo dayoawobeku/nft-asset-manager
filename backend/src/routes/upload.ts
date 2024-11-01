@@ -1,6 +1,6 @@
 import {v2 as cloudinary} from 'cloudinary';
 import {z} from 'zod';
-import {t, TRPCError} from '../trpc';
+import {t, TRPCError} from '../utils/trpc';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

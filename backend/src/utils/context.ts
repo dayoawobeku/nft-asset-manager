@@ -1,6 +1,6 @@
 import {inferAsyncReturnType} from '@trpc/server';
 import {CreateFastifyContextOptions} from '@trpc/server/adapters/fastify';
-import {supabase} from './utils/db';
+import {supabase} from './db';
 
 export async function createContext({req}: CreateFastifyContextOptions) {
   const authHeader = req.headers.authorization;
